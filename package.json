@@ -1,0 +1,21 @@
+{
+  "name": "adevinta_blackjack",
+  "version": "1.0.0",
+  "description": "**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Azzazello@bitbucket.org/Azzazello/adevinta_blackjack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/Azzazello/adevinta_blackjack#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jest": "^24.9.0"
+  }
+}
