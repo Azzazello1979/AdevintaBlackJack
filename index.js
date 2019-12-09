@@ -2,10 +2,7 @@
 // Adevinta BlackJack Test
 const fs = require('fs');
 
-let samWon = false;
-let dealerWon = false;
-let samLost = false;
-let dealerLost = false;
+let samWon;
 
 let samsRound = 1;
 let dealersRound = 1;
@@ -19,8 +16,8 @@ let dealersHandValue = 0;
 let samsCardCodes = [];
 let dealersCardCodes = [];
 
-let suits = ['Diamonds', 'Spades', 'Hearts', 'Clubs'];
-let symbols = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
+const suits = ['Diamonds', 'Spades', 'Hearts', 'Clubs'];
+const symbols = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
 let deck = []; // starting deck: either read from file or generate dynamically if file is nonexistent
 
 
@@ -30,7 +27,7 @@ let shuffledCardsCodes = [];
 
 let fillDeck = () => {
     try{ // try to load from file 1st
-        deck = JSON.parse(fs.readFileSync('./deck.jsonnnnn', 'utf-8'));
+        deck = JSON.parse(fs.readFileSync('./deck.json', 'utf-8'));
     }catch(e){ // if cannot load from file, generate dynamically
         console.log('error reading from file, generating deck dynamically: ' + e.message);
         generateDeck();
@@ -72,6 +69,7 @@ let generateDeck = () => {
 
         })
     })
+    return deck;
     //console.log( JSON.stringify(deck) ); //generate the json file
 }
 
@@ -98,31 +96,25 @@ let whoIsWinning = () => {
     
     if(samsRound === 2 && samsHandValue === 21){
         samWon = true;
-        dealerLost = true;
         return console.log("Sam wins in the first 2 draws with BlackJack! (21)");
         
     }else if(dealersRound === 2 && dealersHandValue === 22){
-        dealerWon = true;
-        samLost = true;
+        samWon = false;
         return console.log("Dealer wins in the first 2 draws with 2 Aces! (22)");
         
     }else if(dealersRound > 2 && samsHandValue > 21){
-        samLost = true;
-        dealerWon = true;
+        samWon = false;
         return console.log("Sam has lost in round " +samsRound+ " because his hand value is higher than 21: " +samsHandValue);
 
     }else if(dealersRound > 2 && samsHandValue === 21){
         samWon = true;
-        dealerLost = true;
         return console.log("Sam has BlackJack! (21) in round " +samsRound);
 
     }else if(dealersRound > 2 && dealersHandValue === 21){
-        dealerWon = true;
-        samLost = true;
+        samWon = false;
         return console.log("Dealer has BlackJack! (21) in round " +dealersRound);
 
     }else if(dealersRound > 2 && dealersHandValue > 21){
-        dealerLost = true;
         samWon = true;
         return console.log("Dealer has lost in round "+dealersRound+" because his hand value is higher than 21: " +dealersHandValue);
 
@@ -227,13 +219,11 @@ if(dealersHandValue > samsHandValue){
 }
 
 
-
-
-
-
-
-
-
+console.log(`
+    ${ samWon ? 'sam' : 'dealer' }
+    sam: ${samsCardCodes}
+    dealer: ${dealersCardCodes}
+`)
 
 
 
